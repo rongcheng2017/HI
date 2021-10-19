@@ -1,7 +1,8 @@
-package com.rongcheng.hilog.printer
+package com.rongcheng.hilog.printer.console
 
 import android.util.Log
 import com.rongcheng.hilog.HiLogConfig
+import com.rongcheng.hilog.printer.HiLogPrinter
 
 class HiConsolePrinter : HiLogPrinter {
     override fun print(config: HiLogConfig, level: Int, tag: String, printString: String) {

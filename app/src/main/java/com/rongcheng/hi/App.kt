@@ -4,7 +4,7 @@ import android.app.Application
 import com.google.gson.Gson
 import com.rongcheng.hilog.HiLogConfig
 import com.rongcheng.hilog.HiLogManager
-import com.rongcheng.hilog.printer.HiConsolePrinter
+import com.rongcheng.hilog.printer.console.HiConsolePrinter
 
 class App : Application() {
     override fun onCreate() {
