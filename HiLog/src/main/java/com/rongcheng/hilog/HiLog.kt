@@ -1,8 +1,8 @@
 package com.rongcheng.hilog
 
-import android.util.Log
 import androidx.annotation.NonNull
-import java.util.*
+import com.rongcheng.hilog.formatter.HiStackTraceUtil
+import com.rongcheng.hilog.printer.HiLogPrinter
 
 /**
  * Tips:
@@ -13,6 +13,13 @@ import java.util.*
 class HiLog {
 
     companion object {
+        private var HI_LOG_PACKAGE: String
+
+        init {
+            val className = HiLog::class.java.name
+            HI_LOG_PACKAGE = className.substring(0, className.lastIndexOf('.') + 1)
+        }
+
         fun v(vararg contents: Any) {
             log(HiLogType.V, contents)
         }
@@ -62,29 +69,60 @@ class HiLog {
         }
 
         fun log(@HiLogType.TYPE type: Int, vararg contents: Any) {
-            log(type, HiLogManager.sConfig?.getGlobalTag() ?: "HiLog", *contents)
+            log(type, HiLogManager.instance.getConfig().getGlobalTag(), *contents)
         }
 
         fun log(@HiLogType.TYPE type: Int, @NonNull tag: String, vararg contents: Any) {
-            log(HiLogManager.sConfig ?: DefaultHiLogConfig(), type, tag, *contents)
+            log(HiLogManager.instance.getConfig(), type, tag, *contents)
         }
 
         fun log(
-            @NonNull config: HiLogConfig,
+            config: HiLogConfig,
             @HiLogType.TYPE type: Int,
-            @NonNull tag: String,
+            tag: String,
             vararg contents: Any
         ) {
             if (!config.enable()) {
                 return
             }
             val sb = StringBuilder()
-            val body = parseBody(*contents)
+
+            //include thread info ?
+            if (config.includeThread()) {
+                val threadInfo = HiLogConfig.HI_THREAD_FORMATTER.format(Thread.currentThread())
+                sb.append(threadInfo).append("\n")
+            }
+
+            //include stacktrace info ?
+            if (config.stackTraceDepth() > 0) {
+                val stackTrace = HiLogConfig.HI_STACK_TRACE_FORMATTER.format(
+                    HiStackTraceUtil.getCroppedRealStackTrace(
+                        Throwable().stackTrace, HI_LOG_PACKAGE, config.stackTraceDepth()
+                    )
+                )
+                sb.append(stackTrace).append("\n")
+            }
+
+            //parse content
+            val body = parseBody(config, *contents)
             sb.append(body)
-            Log.println(type, tag, sb.toString())
+
+            // get printers
+            val printers: List<HiLogPrinter> =
+                config.printers()?.toList() ?: HiLogManager.instance.getPrinters()
+            if (printers.isEmpty()) {
+                throw IllegalArgumentException("HiLog Printers is Empty")
+            }
+            //print
+            for (printer in printers) {
+                printer.print(config, type, tag, sb.toString())
+            }
         }
 
-        private fun parseBody(@NonNull vararg contents: Any): String {
+        private fun parseBody(config: HiLogConfig, vararg contents: Any): String {
+            config.injectJsonParser()?.apply {
+                return toJson(contents)
+            }
             val sb = StringBuilder()
             for (content in contents) {
                 sb.append(content.toString()).append(";")

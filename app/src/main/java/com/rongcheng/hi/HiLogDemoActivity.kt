@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.rongcheng.hilog.HiLog
+import com.rongcheng.hilog.HiLogConfig
+import com.rongcheng.hilog.HiLogType
 
 class HiLogDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +17,16 @@ class HiLogDemoActivity : AppCompatActivity() {
     }
 
     private fun printLog() {
-        HiLog.a("9900","aaa","bbb")
+        HiLog.log(object : HiLogConfig() {
+            override fun includeThread(): Boolean {
+                return true
+            }
+
+            override fun stackTraceDepth(): Int {
+                return 0
+            }
+        }, HiLogType.E, "----", "5566")
+        HiLog.a("9900", "aaa", "bbb")
     }
 
 }
