@@ -3,6 +3,8 @@ package com.rongcheng.hilog
 import com.rongcheng.hilog.printer.HiLogPrinter
 
 //todo 保证单例的线程安全
+//todo 加密  压缩
+//todo 开始时用自己的log，上线后切换另外一套log系统
 class HiLogManager private constructor(
     private val config: HiLogConfig,
     vararg printers: HiLogPrinter

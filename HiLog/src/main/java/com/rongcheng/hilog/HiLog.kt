@@ -21,39 +21,39 @@ class HiLog {
         }
 
         fun v(vararg contents: Any) {
-            log(HiLogType.V, contents)
+            log(HiLogType.V, *contents)
         }
 
         fun vt(tag: String, vararg contents: Any) {
-            log(HiLogType.V, tag, contents)
+            log(HiLogType.V, tag, *contents)
         }
 
         fun d(vararg contents: Any) {
-            log(HiLogType.D, contents)
+            log(HiLogType.D, *contents)
         }
 
         fun vdt(tag: String, vararg contents: Any) {
-            log(HiLogType.D, tag, contents)
+            log(HiLogType.D, tag, *contents)
         }
 
         fun i(vararg contents: Any) {
-            log(HiLogType.I, contents)
+            log(HiLogType.I, *contents)
         }
 
         fun it(tag: String, vararg contents: Any) {
-            log(HiLogType.I, tag, contents)
+            log(HiLogType.I, tag, *contents)
         }
 
         fun w(vararg contents: Any) {
-            log(HiLogType.W, contents)
+            log(HiLogType.W, *contents)
         }
 
         fun wt(tag: String, vararg contents: Any) {
-            log(HiLogType.W, tag, contents)
+            log(HiLogType.W, tag, *contents)
         }
 
         fun e(vararg contents: Any) {
-            log(HiLogType.E, contents)
+            log(HiLogType.E, *contents)
         }
 
         fun et(tag: String, vararg contents: Any) {

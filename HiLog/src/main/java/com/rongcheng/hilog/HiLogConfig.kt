@@ -7,7 +7,7 @@ import com.rongcheng.hilog.printer.HiLogPrinter
 abstract class HiLogConfig {
 
     companion object {
-        const val MAX_LEN = 512;
+        const val MAX_LEN = 1024
         val HI_THREAD_FORMATTER = HiThreadFormatter()
         val HI_STACK_TRACE_FORMATTER = HiStackTraceFormatter()
     }

@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('hiKey.jks')
+            storePassword 'hi123456'
+            keyAlias 'hi'
+            keyPassword 'hi123456'
+        }
+    }
     compileSdk 31
 
     defaultConfig {
@@ -17,9 +25,13 @@ android {
     }
 
     buildTypes {
+        debug{
+
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

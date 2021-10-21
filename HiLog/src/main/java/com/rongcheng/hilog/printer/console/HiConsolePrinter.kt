@@ -9,9 +9,6 @@ class HiConsolePrinter : HiLogPrinter {
         val len = printString.length
         val everyDepthLength = HiLogConfig.MAX_LEN
         val countOfStub = len / everyDepthLength
-//        if (len % everyDepthLength != 0) {
-//            countOfStub++
-//        }
         if (countOfStub > 0) {
             var index = 0
             for (i in 0 until countOfStub) {

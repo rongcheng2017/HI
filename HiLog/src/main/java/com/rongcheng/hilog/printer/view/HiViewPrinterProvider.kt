@@ -11,7 +11,7 @@ import com.rongcheng.hilog.util.HiDisplayUtil
 
 class HiViewPrinterProvider {
 
-    val rootView: FrameLayout
+     val rootView: FrameLayout
     var floatingView: View? = null
     var isOpen: Boolean = false
     var logView: FrameLayout? = null
