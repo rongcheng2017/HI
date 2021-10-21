@@ -43,7 +43,7 @@ class HiLogDemoActivity : AppCompatActivity() {
 //        Timber.d("9900  %s","cc")
 //        Timber.d(Throwable("sorry this is "))
 //        Timber.w(IllegalThreadStateException("sorry this is "))
-        Timber.i("this is a useful device info")
+        Timber.e(IllegalThreadStateException("sorry this is "))
     }
 
 }
